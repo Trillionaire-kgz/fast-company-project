@@ -12,30 +12,28 @@ const Users = ()=> {
         
    }
 
-   const renderPhrase = () => {
-        switch(users) {
-            case users.length > 4 && users.length <= 12:
-                return <span>{users.length} человек тусанут с тобой</span>
-            case users.length > 1 && users.length <= 4:
-                return <span>{users.length} человека тусанут с тобой</span>
-            case users.length === 1:
-                return <span>{users.length} человек тусанет с тобой</span>;
-            case users.length === 0:
-                return <span className="badge bg-danger">Никто не тусанет с тобой!</span>;
-            default:
-                return <span>{users.length} человек тусанут с тобой</span>
-        }
+   const renderPhrase = (number) => {
+        if(number > 4 && number < 15) {
+            return 'человек тусанет'}
+            else if(number <= 4 && number > 1) {
+                return 'человека тусанут'
+            } else if (number === 1) {
+                return 'человек тусанет'
+            }
+        
    }
 
-   const renderQualities = () => {
-      return  users.map(user => <span key={user._id}>{user.qualities.map(quality => <span>{quality.name}</span>)}</span>)
+   const renderQualities = (qualities) => {
+    let colorData = 'badge m-2 bg-'
+
+      return qualities.map((quality) => <span className={colorData+quality.color}>{quality.name}</span>)
    }
 
    const renderUsers = () => {
     return users.map(user =>  
     <tr key={user._id}>
         <th scope="row">{user.name}</th>
-        <td>{renderQualities()}</td>
+        <td>{renderQualities(user.qualities)}</td>
         <td>{user.profession.name}</td>
         <td>{user.completedMeetings}</td>
         <td>{user.rate}</td>
@@ -45,7 +43,9 @@ const Users = ()=> {
 
    return (<>
     <h2>
-        <span className="badge bg-primary">{renderPhrase()}</span>
+        <span className={'badge ' + (users.length > 0 ? 'bg-primary' : 'bg-danger')}>
+            {users.length > 0 ? `${users.length + ' ' + renderPhrase(users.length)} с тобой` : 'Никто с тобой не тусанет'}
+        </span>
     </h2>
     <table class="table table-striped">
         <thead>
