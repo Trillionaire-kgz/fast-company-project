@@ -4,7 +4,7 @@ const Bookmark = ({ status, onToggleBookmark, id }) => {
   return (
     <i
       onClick={() => onToggleBookmark(id)}
-      className={"bi bi-bookmark" + status ? "-fill" : ""}
+      className={"bi bi-bookmark" + (status ? "-fill" : "")}
     ></i>
   );
 };

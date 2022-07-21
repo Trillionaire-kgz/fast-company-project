@@ -16,7 +16,7 @@ const User = ({
   return (
     <tr key={_id}>
       <th scope="row">{name}</th>
-      <td>
+      <td key={qualities}>
         {qualities.map((qual) => (
           <Qualities {...qual} />
         ))}
@@ -33,8 +33,8 @@ const User = ({
       </td>
       <td>
         <button
+          onClick={() => onDeleteUser(_id)}
           className="btn btn-danger btn-sm m-2"
-          //onClick={() => onDeleteUser()}
         >
           Delete
         </button>
