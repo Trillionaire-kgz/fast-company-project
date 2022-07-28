@@ -1,9 +1,7 @@
 import React from "react";
 
-const Qualities = (props) => {
-  let colorData = "badge m-1 bg-";
-
-  return <span className={colorData + props.color}>{props.name}</span>;
+const Qualities = ({ color, name }) => {
+  return <span className={"badge m-1 bg-" + color}>{name}</span>;
 };
 
 export default Qualities;

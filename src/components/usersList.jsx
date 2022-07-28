@@ -20,6 +20,7 @@ const UsersList = ({ users, onDeleteUser, onToggleBookmark }) => {
           <tbody>
             {users.map((user) => (
               <User
+                key={user._id}
                 {...user}
                 onDeleteUser={onDeleteUser}
                 onToggleBookmark={onToggleBookmark}
