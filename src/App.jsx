@@ -27,11 +27,13 @@ const App = () => {
 
     return (
         <>
-            <UsersList
-                users={users}
-                onDeleteUser={handleDelete}
-                onToggleBookmark={handleBookmark}
-            />
+            {users && (
+                <UsersList
+                    users={users}
+                    onDeleteUser={handleDelete}
+                    onToggleBookmark={handleBookmark}
+                />
+            )}
         </>
     );
 };

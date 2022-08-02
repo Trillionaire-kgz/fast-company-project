@@ -31,7 +31,11 @@ const UsersList = ({ users: allUsers, ...rest }) => {
     };
 
     const filteredUsers = selectedProf
-        ? allUsers.filter((user) => user.profession === selectedProf)
+        ? allUsers.filter(
+              (user) =>
+                  JSON.stringify(user.profession) ===
+                  JSON.stringify(selectedProf)
+          )
         : allUsers;
     const count = filteredUsers.length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -55,43 +59,37 @@ const UsersList = ({ users: allUsers, ...rest }) => {
                     </div>
                 )}
 
-                {allUsers && (
-                    <div className="d-flex flex-column">
-                        <SearchStatus length={count} />
-                        {count > 0 && (
-                            <table className="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Имя</th>
-                                        <th scope="col">Качества</th>
-                                        <th scope="col">Профессия</th>
-                                        <th scope="col">Встретился, раз</th>
-                                        <th scope="col">Оценка</th>
-                                        <th scope="col">Избранное</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {userCrop.map((user) => (
-                                        <User
-                                            key={user._id}
-                                            {...user}
-                                            {...rest}
-                                        />
-                                    ))}
-                                </tbody>
-                            </table>
-                        )}
-                        <div className="d-flex justify-content-center">
-                            <Pagination
-                                itemsCount={count}
-                                pageSize={pageSize}
-                                currentPage={currentPage}
-                                onPageChange={handlePageChange}
-                            />
-                        </div>
+                <div className="d-flex flex-column">
+                    <SearchStatus length={count} />
+                    {count > 0 && (
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Имя</th>
+                                    <th scope="col">Качества</th>
+                                    <th scope="col">Профессия</th>
+                                    <th scope="col">Встретился, раз</th>
+                                    <th scope="col">Оценка</th>
+                                    <th scope="col">Избранное</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {userCrop.map((user) => (
+                                    <User key={user._id} {...user} {...rest} />
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                    <div className="d-flex justify-content-center">
+                        <Pagination
+                            itemsCount={count}
+                            pageSize={pageSize}
+                            currentPage={currentPage}
+                            onPageChange={handlePageChange}
+                        />
                     </div>
-                )}
+                </div>
             </div>
         );
     }

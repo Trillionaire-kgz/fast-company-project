@@ -8,7 +8,7 @@ const GroupList = ({
     onItemSelect,
     selectedItem
 }) => {
-    if (Array.isArray(items) === false) {
+    if (!Array.isArray(items)) {
         return (
             <ul className="list-group">
                 {Object.keys(items).map((item) => (
@@ -27,25 +27,24 @@ const GroupList = ({
             </ul>
         );
     }
-    if (Array.isArray(items) === true) {
-        return (
-            <ul className="list-group">
-                {items.map((item) => (
-                    <li
-                        key={item.valueProperty}
-                        className={
-                            "list-group-item" +
-                            (item === selectedItem ? " active" : "")
-                        }
-                        onClick={() => onItemSelect(item)}
-                        role="button"
-                    >
-                        {item.contentProperty}
-                    </li>
-                ))}
-            </ul>
-        );
-    }
+
+    return (
+        <ul className="list-group">
+            {items.map((item) => (
+                <li
+                    key={item.valueProperty}
+                    className={
+                        "list-group-item" +
+                        (item === selectedItem ? " active" : "")
+                    }
+                    onClick={() => onItemSelect(item)}
+                    role="button"
+                >
+                    {item[contentProperty]}
+                </li>
+            ))}
+        </ul>
+    );
 };
 
 GroupList.defaultProps = {
