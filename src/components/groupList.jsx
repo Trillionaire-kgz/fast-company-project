@@ -32,7 +32,7 @@ const GroupList = ({
         <ul className="list-group">
             {items.map((item) => (
                 <li
-                    key={item.valueProperty}
+                    key={item[valueProperty]}
                     className={
                         "list-group-item" +
                         (item === selectedItem ? " active" : "")
