@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { paginate } from "../utils/paginate";
 import Pagination from "./pagination";
-import PropTypes from "prop-types";
 import GroupList from "./groupList";
 import api from "../api";
 import SearchStatus from "../components/searchStatus";
@@ -12,13 +11,21 @@ const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState();
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "", order: "asc" });
-    const pageSize = 8;
-
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
+
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
     }, []);
+
+    useEffect(() => {
+        api.professions.fetchAll().then((data) => setProfession(data));
+    }, []);
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [selectedProf]);
+
+    const pageSize = 8;
 
     const handleDelete = (userId) => {
         setUsers((prevState) =>
@@ -37,16 +44,6 @@ const UsersList = () => {
         );
     };
 
-    const handleCaret = (item) => {
-        console.log(item);
-    };
-
-    useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfession(data));
-    }, []);
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [selectedProf]);
     const handlePageChange = (pageIndex) => {
         setCurrentPage(pageIndex);
     };
@@ -106,7 +103,6 @@ const UsersList = () => {
                             selectedSort={sortBy}
                             onDeleteUser={handleDelete}
                             onToggleBookmark={handleBookmark}
-                            onToggleCaret={handleCaret}
                         />
                     )}
                     <div className="d-flex justify-content-center">
@@ -122,12 +118,6 @@ const UsersList = () => {
         );
     }
     return "loading...";
-};
-
-UsersList.propTypes = {
-    users: PropTypes.array.isRequired,
-    onDeleteUser: PropTypes.func.isRequired,
-    onToggleBookmark: PropTypes.func.isRequired
 };
 
 export default UsersList;

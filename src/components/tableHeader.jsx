@@ -27,6 +27,15 @@ const TableHeader = ({ onSort, selectedSort, columns }) => {
                         {...{ role: columns[column].path && "button" }}
                     >
                         {columns[column].name}
+                        <i
+                            className={
+                                columns[column].path &&
+                                selectedSort.path === columns[column].path &&
+                                selectedSort.order === "asc"
+                                    ? "bi bi-caret-up-fill"
+                                    : "bi bi-caret-down-fill"
+                            }
+                        ></i>
                     </th>
                 ))}
             </tr>
