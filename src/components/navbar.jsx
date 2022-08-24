@@ -15,8 +15,8 @@ const Navbar = () => {
                 </Link>
             </span>
             <span>
-                <Link to="/user" className="m-4">
-                    User
+                <Link to="/users" className="m-4">
+                    Users
                 </Link>
             </span>
         </div>
