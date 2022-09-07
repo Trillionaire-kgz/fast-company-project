@@ -2,17 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
+import UserSearch from "./userSearch";
 
 const Table = ({ onSort, selectedSort, columns, data, children }) => {
     return (
-        <table className="table table-striped">
-            {children || (
-                <>
-                    <TableHeader {...{ onSort, selectedSort, columns }} />
-                    <TableBody {...{ columns, data }} />
-                </>
-            )}
-        </table>
+        <>
+            <UserSearch {...{ data }} />
+            <table className="table table-striped">
+                {children || (
+                    <>
+                        <TableHeader {...{ onSort, selectedSort, columns }} />
+                        <TableBody {...{ columns, data }} />
+                    </>
+                )}
+            </table>
+        </>
     );
 };
 
