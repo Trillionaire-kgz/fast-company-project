@@ -13,6 +13,7 @@ const UsersList = () => {
     const [selectedProf, setSelectedProf] = useState();
     const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const [users, setUsers] = useState();
+    const [value, setValue] = useState("");
 
     useEffect(() => {
         api.users.fetchAll().then((data) => setUsers(data));
@@ -76,6 +77,11 @@ const UsersList = () => {
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
 
+        const userMatch = users.filter((user) => {
+            return user.name.toLowerCase().includes(value.toLowerCase());
+        });
+        console.log(userMatch);
+
         return (
             <div className="d-flex">
                 {professions && (
@@ -96,6 +102,21 @@ const UsersList = () => {
 
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
+                    <div className="input-group mb-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Search..."
+                            onChange={(event) => setValue(event.target.value)}
+                        ></input>
+                    </div>
+                    {value && (
+                        <ul className="list-group">
+                            {userMatch.map((item) => (
+                                <li key={item._id}>{item}</li>
+                            ))}
+                        </ul>
+                    )}
                     {count > 0 && (
                         <UserTable
                             users={userCrop}

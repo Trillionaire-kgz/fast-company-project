@@ -2,12 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import TableHeader from "./tableHeader";
 import TableBody from "./tableBody";
-import UserSearch from "./userSearch";
 
 const Table = ({ onSort, selectedSort, columns, data, children }) => {
     return (
         <>
-            <UserSearch {...{ data }} />
             <table className="table table-striped">
                 {children || (
                     <>
