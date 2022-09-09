@@ -6,6 +6,7 @@ import api from "../api";
 import SearchStatus from "../components/searchStatus";
 import UserTable from "./usersTable";
 import _ from "lodash";
+import SearchUser from "./searchUser";
 
 const UsersList = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +50,7 @@ const UsersList = () => {
         setCurrentPage(pageIndex);
     };
     const handleProfessionSelect = (item) => {
-        console.log(item);
+        if (value !== "") setValue("");
         setSelectedProf(item);
     };
 
@@ -61,12 +62,21 @@ const UsersList = () => {
         setSelectedProf();
     };
 
+    const handleValue = (event) => {
+        setSelectedProf(undefined);
+        setValue(event.target.value);
+    };
+
     if (users) {
         const filteredUsers = selectedProf
             ? users.filter(
                   (user) =>
                       JSON.stringify(user.profession) ===
                       JSON.stringify(selectedProf)
+              )
+            : value
+            ? users.filter((user) =>
+                  user.name.toLowerCase().includes(value.toLowerCase())
               )
             : users;
         const count = filteredUsers.length;
@@ -76,11 +86,6 @@ const UsersList = () => {
             [sortBy.order]
         );
         const userCrop = paginate(sortedUsers, currentPage, pageSize);
-
-        const userMatch = users.filter((user) => {
-            return user.name.toLowerCase().includes(value.toLowerCase());
-        });
-        console.log(userMatch);
 
         return (
             <div className="d-flex">
@@ -102,21 +107,13 @@ const UsersList = () => {
 
                 <div className="d-flex flex-column">
                     <SearchStatus length={count} />
-                    <div className="input-group mb-3">
-                        <input
-                            type="text"
-                            className="form-control"
-                            placeholder="Search..."
-                            onChange={(event) => setValue(event.target.value)}
-                        ></input>
-                    </div>
-                    {value && (
-                        <ul className="list-group">
-                            {userMatch.map((item) => (
-                                <li key={item._id}>{item}</li>
-                            ))}
-                        </ul>
-                    )}
+                    <SearchUser
+                        type="text"
+                        className="form-control"
+                        placeholder="Search..."
+                        value={value}
+                        onChange={handleValue}
+                    />
                     {count > 0 && (
                         <UserTable
                             users={userCrop}
